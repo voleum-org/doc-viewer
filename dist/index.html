@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DocViewer</title>
+    <style>
+      table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+      }
+      
+      table {
+          width: 100%;	  
+      }
+      
+      button {
+          font-size: 20px;
+          margin-top: 20px;
+      }
+      
+      body {
+          font-size: 18px;
+      }
+
+      #main {
+          display: flex;
+          flex-flow: row;
+          justify-content: space-between;
+      }
+      
+      input[type=number]::-webkit-inner-spin-button, 
+      input[type=number]::-webkit-outer-spin-button { 
+          -webkit-appearance: none; 
+          margin: 0; 
+      }
+    </style>
+
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="bundle.js"></script>
+  </body>
+</html>
