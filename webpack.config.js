@@ -17,8 +17,14 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  },
   output: {
     filename: 'bundle.js',
+    publicPath: '',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
