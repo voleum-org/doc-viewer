@@ -1,2 +1,3 @@
 .emacs*
 node_modules
+dist
