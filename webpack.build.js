@@ -34,11 +34,4 @@ module.exports = {
     }),
     new HtmlInlineScriptPlugin(),
   ],
-  devServer: {
-    static: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000,
-    open: false,
-    hot: true
-  },
 };
