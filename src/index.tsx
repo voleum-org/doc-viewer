@@ -1,22 +1,22 @@
 import * as React from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { HashRouter, Route, Routes } from "react-router-dom"
 import { App } from  "./App";
 
 const domNode = document.getElementById("root");
 
-const router = createBrowserRouter([
-  {
-    path: "*",
-    element: <App/>
-  }
-]);
-
 if (domNode) {
   createRoot(domNode).render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <HashRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={<App />}
+          />
+        </Routes>
+      </HashRouter>
     </StrictMode>
   );
 } else {

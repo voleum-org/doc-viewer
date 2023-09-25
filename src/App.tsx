@@ -75,10 +75,18 @@ export function App() {
   const [language, setLanguage] = useState<LanguageCode>();
   
   useEffect(() => {
+    if (!searchParams.get("gateway")) {
+      setSearchParams(old => {
+        old.set("gateway", gatewayToString(extendedDefaultGateways[0]));
+        return old
+      })
+    }
+    
     let link = paramsToLink(searchParams);
     if (link) {
       setIpfsLink(link);
     }
+    
     let lang = paramsToLang(searchParams);
     if (lang) {
       setLanguage(lang);
@@ -104,6 +112,7 @@ export function App() {
           gateways={extendedDefaultGateways}
           value={ipfsLink && ipfsLink.gateway}
           onSelect={(gateway) => {
+            console.log("gateway select");
             setSearchParams((old) =>
               gatewayToParams(old, gateway)
             );

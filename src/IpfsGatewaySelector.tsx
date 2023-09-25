@@ -49,12 +49,7 @@ export function IpfsGatewaySelector(props: IpfsGatewaySelectorProps) {
       }
     }
   }
-
-  useEffect(() => {
-    if (!props.value)
-      props.onSelect(parseGateway(gatewayOptions && gatewayOptions[0] && gatewayOptions[0].value));
-  }, [props.value]);
-
+  
   return (
     <div>
       <label>IPFS Gateway:</label>

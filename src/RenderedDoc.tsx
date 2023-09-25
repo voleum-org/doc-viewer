@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Remarkable } from "remarkable";
-import * as crypto from "crypto-js";
 import { LanguageCode} from "iso-639-1";
-import { getHashingFunction, getEncodingFunction, HasherHelper, Encoder } from "./crypto-utils";
+import { getHashingFunction, getEncodingFunction } from "./crypto-utils";
 
 export interface Files {
   [filename: string]: string
@@ -41,9 +40,30 @@ function getHashes(language: LanguageCode, files: Files): [string, string, strin
   return res ;
 }
 
+function replaceDocLink(help?: string, doc?: string): string | null {
+  if (help && doc) {
+    let htmlDoc = document.implementation.createHTMLDocument();
+    htmlDoc.documentElement.innerHTML = help;
+    let sourceLinkTags =
+      Array.from(htmlDoc.getElementsByTagName("a"))
+        .filter(a => a.href.includes("replace_me"));
+    let docUrl = window.URL.createObjectURL(new Blob([doc], {type: "text/markdown"}));
+    sourceLinkTags.map(a => {
+      a.href = docUrl;
+      a.download = "source.md";
+    });
+    let body = htmlDoc.getElementsByTagName("body")[0];
+
+    return body.innerHTML;
+  }
+  return null;
+}
+
+
 function RenderedDocInner({ files, language }: {files: Files, language: LanguageCode | null}) {
   let docSource = language && files[`${language}/source.md`];
-  let hashes = getHashes(language, files);  
+  let hashes = getHashes(language, files);
+  let helpSource = language && files[`${language}/help.md`];
   return (
     <div>
       <div dangerouslySetInnerHTML={{
@@ -68,11 +88,15 @@ function RenderedDocInner({ files, language }: {files: Files, language: Language
           }
         </tbody>
       </table>
+      <div dangerouslySetInnerHTML={{
+        __html:
+          replaceDocLink(md.render(helpSource), docSource)
+      }}>
+      </div>
     </div>
   );
 }
 
-//      {docHash == computedHash ? <></> : <h3>Ошибка: хэши не совпадают!</h3>}
 export function RenderedDoc(props: RenderedDocProps) {
   return (
     <div>
